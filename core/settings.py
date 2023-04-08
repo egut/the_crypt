@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-
+    'daphne',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     'theme_material_kit',
     #My Apps
-    'home'
+    'home',
+    'game'
 ]
 
 SITE_ID=1
@@ -82,6 +83,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+ASGI_APPLICATION = 'core.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
