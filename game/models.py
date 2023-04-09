@@ -43,6 +43,10 @@ class Game(models.Model):
         help_text="The name of the game",
         unique=True)
 
+    game_config = models.ForeignKey(
+        GameConfig,
+        on_delete=models.CASCADE)
+
     start_time = models.DateTimeField(
         help_text="When the game will start")
 

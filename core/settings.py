@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'theme_material_kit',
     #My Apps
     'home',
-    'game'
+    'game',
+    'chat.apps.ChatConfig'
 ]
 
 SITE_ID=1
@@ -86,11 +87,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 ASGI_APPLICATION = 'core.asgi.application'
 
+REDIS_HOST = 'localhost'
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [(REDIS_HOST, 6379)],
         },
     },
 }
@@ -140,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'sv-se'
 
 TIME_ZONE = 'UTC'
 

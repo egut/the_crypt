@@ -11,3 +11,4 @@ python-dotenv
 selenium
 whitenoise
 Pillow
+attrs

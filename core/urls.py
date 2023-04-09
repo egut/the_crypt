@@ -20,9 +20,9 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('theme_material_kit.urls')),
     path('', include('home.urls')),
-    path('game/', include('game.urls')),
     path('admin/', admin.site.urls),
+    path('game/', include('game.urls')),
     path('accounts/', include('allauth.urls')),
-
+    path('chat/', include('chat.urls')),
 
 ]
