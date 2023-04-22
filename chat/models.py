@@ -1,10 +1,20 @@
-from django.contrib.auth.models import User
+"""
+Chat model
+"""
+
 from django.db import models
+from game.models import Player
 
 
 class Room(models.Model):
     name = models.CharField(max_length=128)
-    online = models.ManyToManyField(to=User, blank=True)
+    online = models.ManyToManyField(to=Player, blank=True)
+    type = models.CharField(
+        max_length=30,
+        choices=[
+        ('ANONYMOUS','Anonym chat'),
+        ('FIGURE','Figure chat'),
+        ('PLAYER','Player chat')])
 
     def get_online_count(self):
         return self.online.count()
@@ -18,14 +28,14 @@ class Room(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.name} ({self.get_online_count()})'
+        return f'{self.name} ({self.type})'
 
 
 class Message(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    player = models.ForeignKey(to=Player, on_delete=models.CASCADE)
     room = models.ForeignKey(to=Room, on_delete=models.CASCADE)
     content = models.CharField(max_length=512)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.user.username}: {self.content} [{self.timestamp}]'
+        return f'{self.player.name}: {self.content} [{self.timestamp}]'

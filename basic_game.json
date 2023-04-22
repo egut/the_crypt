@@ -1,0 +1,231 @@
+[
+    {
+        "model": "game.gameconfig",
+        "pk": 1,
+        "fields":
+        {
+            "name": "Vanlig varulv"
+        }
+    },
+    {
+        "model": "game.game",
+        "pk": 1,
+        "fields":
+        {
+            "name": "Simple game",
+            "game_config": 1,
+            "start_time": "2023-04-22T07:59:58Z"
+        }
+    },
+    {
+        "model": "game.figureset",
+        "pk": 1,
+        "fields":
+        {
+            "name": "Bybo"
+        }
+    },
+    {
+        "model": "game.figureset",
+        "pk": 2,
+        "fields":
+        {
+            "name": "Varulv"
+        }
+    },
+    {
+        "model": "game.figureset",
+        "pk": 3,
+        "fields":
+        {
+            "name": "Vit varulv"
+        }
+    },
+    {
+        "model": "game.figureset",
+        "pk": 4,
+        "fields":
+        {
+            "name": "Sierska"
+        }
+    },
+    {
+        "model": "game.figureset",
+        "pk": 5,
+        "fields":
+        {
+            "name": "Jägare"
+        }
+    },
+    {
+        "model": "game.phalanx",
+        "pk": 1,
+        "fields":
+        {
+            "game_config": 1,
+            "parent_phalanx": null,
+            "name": "Bybor",
+            "description": "Vanlig bybo"
+        }
+    },
+    {
+        "model": "game.phalanx",
+        "pk": 2,
+        "fields":
+        {
+            "game_config": 1,
+            "parent_phalanx": null,
+            "name": "Varulv",
+            "description": "De alternativ goda varulvarna"
+        }
+    },
+    {
+        "model": "game.phalanx",
+        "pk": 3,
+        "fields":
+        {
+            "game_config": 1,
+            "parent_phalanx": 1,
+            "name": "Sierska",
+            "description": "Kan se om natten"
+        }
+    },
+    {
+        "model": "game.phalanx",
+        "pk": 4,
+        "fields":
+        {
+            "game_config": 1,
+            "parent_phalanx": 1,
+            "name": "Jägare",
+            "description": "Kan skuta om hen dör"
+        }
+    },
+    {
+        "model": "game.phalanx",
+        "pk": 5,
+        "fields":
+        {
+            "game_config": 1,
+            "parent_phalanx": 2,
+            "name": "Vit varulv",
+            "description": "Varulv med hybris vinner själv"
+        }
+    },
+    {
+        "model": "game.figure",
+        "pk": 1,
+        "fields":
+        {
+            "title": "Bybo",
+            "description": "Vanlig lat bybo",
+            "image": "",
+            "phalanx": 1,
+            "type": "PROFESSION",
+            "figure_set":
+            [
+                1
+            ]
+        }
+    },
+    {
+        "model": "game.figure",
+        "pk": 2,
+        "fields":
+        {
+            "title": "Varulv",
+            "description": "Alternativ goda",
+            "image": "",
+            "phalanx": 2,
+            "type": "PROFESSION",
+            "figure_set":
+            [
+                2
+            ]
+        }
+    },
+    {
+        "model": "game.figure",
+        "pk": 3,
+        "fields":
+        {
+            "title": "Vit varulv",
+            "description": "Varulv med hybris",
+            "image": "",
+            "phalanx": 5,
+            "type": "PROFESSION",
+            "figure_set":
+            [
+                2,
+                3
+            ]
+        }
+    },
+    {
+        "model": "game.figure",
+        "pk": 4,
+        "fields":
+        {
+            "title": "Sierska",
+            "description": "Ser om natten",
+            "image": "",
+            "phalanx": 3,
+            "type": "PROFESSION",
+            "figure_set":
+            [
+                1,
+                4
+            ]
+        }
+    },
+    {
+        "model": "game.figure",
+        "pk": 5,
+        "fields":
+        {
+            "title": "Jägare",
+            "description": "Jagar när hen dör",
+            "image": "",
+            "phalanx": 4,
+            "type": "PROFESSION",
+            "figure_set":
+            [
+                1,
+                5
+            ]
+        }
+    },
+    {
+        "model": "game.victory",
+        "pk": 1,
+        "fields":
+        {
+            "phalanx": 1,
+            "name": "Bybor  vinner",
+            "win_condition": "ALL_OTHER",
+            "win_condition_argument": 1
+        }
+    },
+    {
+        "model": "game.victory",
+        "pk": 2,
+        "fields":
+        {
+            "phalanx": 2,
+            "name": "Varulvaran vinner",
+            "win_condition": "ALL_OTHER",
+            "win_condition_argument": 2
+        }
+    },
+    {
+        "model": "game.victory",
+        "pk": 3,
+        "fields":
+        {
+            "phalanx": 5,
+            "name": "Vit varulv vinner",
+            "win_condition": "ALL_OTHER",
+            "win_condition_argument": 5
+        }
+    }
+]

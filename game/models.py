@@ -30,7 +30,6 @@ class GameConfig(models.Model):
         return self.name
 
 
-
 class Game(models.Model):
     """
     This is the model that connects the game together.
@@ -78,10 +77,12 @@ class Player(models.Model):
    #To what figure set this player have.
     figure_set = models.OneToOneField(
         "FigureSet",
+        blank=True,
         on_delete=models.CASCADE)
 
     #The name in the game
     name = models.CharField(
+        help_text="Vad vill du kalla dig i detta spelet?",
         max_length=50,
         blank=False)
 
@@ -89,7 +90,8 @@ class Player(models.Model):
     profile = models.ImageField(
         upload_to='profiles')
 
-    health = models.IntegerField()
+    health = models.IntegerField(
+        default=100)
 
     def __str__(self):
         return str(self.__unicode__())
@@ -148,7 +150,12 @@ class Phalanx(models.Model):
         return str(self.__unicode__())
 
     def __unicode__(self):
-        return self.name
+
+
+        if self.parent_phalanx:
+            return f'{self.parent_phalanx}/{self.name} ({self.game_config})'
+        return f'{self.name} ({self.game_config}) '
+
 
 
 
@@ -165,20 +172,19 @@ class Figure(models.Model):
         help_text="The name of the figure")
 
     description = models.TextField(
-        help_text="DEscription of the figure"
+        help_text="Description of the figure"
     )
 
     image =  models.ImageField(
-        upload_to='figures')
+        upload_to='figures',
+        blank=True)
 
 
     # What figure set a figure belongs to
     # A player can only be associated with a set
-    figure_set = models.ForeignKey(
-        FigureSet,
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE
+    figure_set = models.ManyToManyField(
+        to=FigureSet,
+        blank=True
     )
 
     #What phalanx a figure belongs to, this is where all the rest is defined.
@@ -188,7 +194,7 @@ class Figure(models.Model):
     )
 
     FigureType = models.TextChoices(
-        'FigureType', 'PROFESSION PERSONAGE ALONE')
+        'FigureType', 'PROFESSION PERSONA ALONE')
     type = models.CharField(
         choices=FigureType.choices,
         max_length=20,

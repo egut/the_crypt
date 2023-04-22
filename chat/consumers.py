@@ -1,10 +1,12 @@
+"""
+Handle WS for chat messages
+"""
 import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 from .models import Room, Message
-
 
 class ChatConsumer(WebsocketConsumer):
 
@@ -55,7 +57,9 @@ class ChatConsumer(WebsocketConsumer):
             )
             self.room.online.add(self.user)
 
+
     def disconnect(self, close_code):
+        del close_code
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name,
