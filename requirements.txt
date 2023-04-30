@@ -5,7 +5,7 @@ django
 django_compressor
 django-libsass
 django-allauth
-django-theme-material-kit==1.0.19
+django-bootstrap-v5
 gunicorn
 python-dotenv
 selenium

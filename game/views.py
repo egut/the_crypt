@@ -2,6 +2,8 @@
 This describe all the views in the game
 """
 from django.shortcuts import render, redirect
+from django.contrib import messages
+
 from django.contrib import auth
 
 from .models import Game, Player
@@ -17,8 +19,15 @@ def index(request):
 def join(request, game_id):
     this_game = Game.objects.get(id=game_id)
     if request.method == "POST":
-        pass
-
+        form = PlayerForm(request.POST,request.FILES)
+        # check whether it's valid:
+        if form.is_valid():
+            player = form.save(commit=False)
+            player.game = this_game
+            player.user = request.user
+            player.save()
+            messages.success(request, "Player added!")
+            return redirect(game, game_id=game_id)
     else:
         form = PlayerForm()
 

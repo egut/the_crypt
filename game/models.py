@@ -78,6 +78,7 @@ class Player(models.Model):
     figure_set = models.OneToOneField(
         "FigureSet",
         blank=True,
+        null=True,
         on_delete=models.CASCADE)
 
     #The name in the game
@@ -88,7 +89,8 @@ class Player(models.Model):
 
     # Todo: Follow https://djangocentral.com/uploading-images-with-django/
     profile = models.ImageField(
-        upload_to='profiles')
+        help_text="Vilken profilbild vill du ha i spelet?",
+        upload_to='profiles/%Y/%m/%d/')
 
     health = models.IntegerField(
         default=100)
