@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from chat.models import Room
-from game.models import Player, Phalanx, Figure, FigureSet
+from game.models import Game, Player, Phalanx, Figure, FigureSet
 
 def get_phalanx(user, game_id):
     player = Player.objects.get(user=user, game_id=game_id)
@@ -20,7 +20,11 @@ def index_view(request, game_id):
 
 
 def room_view(request, game_id, room_name):
-    chat_room, created = Room.objects.get_or_create(name=room_name)
+    this_game = Game.objects.get(id=game_id)
+    chat_room, created = Room.objects.get_or_create(
+        game=this_game, name=room_name)
+
     return render(request, 'room.html', {
         'room': chat_room,
+        'game': this_game,
     })

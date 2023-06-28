@@ -2,13 +2,15 @@
 Chat model
 """
 
+
 from django.db import models
-from game.models import Player
+from game.models import Player, Game
 
 
 class Room(models.Model):
     name = models.CharField(max_length=128)
     online = models.ManyToManyField(to=Player, blank=True)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
     type = models.CharField(
         max_length=30,
         choices=[

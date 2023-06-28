@@ -1,7 +1,8 @@
+
 console.log("Sanity check from room.js.");
 
 const roomName = JSON.parse(document.getElementById('roomName').textContent);
-
+const gameId = JSON.parse(document.getElementById('gameId').textContent);
 let chatLog = document.querySelector("#chatLog");
 let chatMessageInput = document.querySelector("#chatMessageInput");
 let chatMessageSend = document.querySelector("#chatMessageSend");
@@ -41,10 +42,12 @@ chatMessageSend.onclick = function() {
     chatMessageInput.value = "";
 };
 
+
+
 let chatSocket = null;
 
 function connect() {
-    chatSocket = new WebSocket("ws://" + window.location.host + "/ws/chat/" + roomName + "/");
+    chatSocket = new WebSocket("ws://" + window.location.host + "/ws/chat/" + gameId + "/" + roomName + "/");
 
     chatSocket.onopen = function(e) {
         console.log("Successfully connected to the WebSocket.");
@@ -64,27 +67,29 @@ function connect() {
 
         switch (data.type) {
             case "chat_message":
-                chatLog.value += data.user + ": " + data.message + "\n";
-                break;
-            case "user_list":
-                for (let i = 0; i < data.users.length; i++) {
-                    onlineUsersSelectorAdd(data.users[i]);
+                if (roomName == "Anonym") {
+                    chatLog.value += "- " + data.message + "\n";
+                } else {
+                    chatLog.value += data.player + ": " + data.message + "\n";
                 }
                 break;
-            case "user_join":
-                chatLog.value += data.user + " joined the room.\n";
-                onlineUsersSelectorAdd(data.user);
+
+            case "player_list":
+                for (let i = 0; i < data.players.length; i++) {
+                    onlineUsersSelectorAdd(data.players[i]);
+                }
                 break;
-            case "user_leave":
-                chatLog.value += data.user + " left the room.\n";
-                onlineUsersSelectorRemove(data.user);
+
+            case "player_join":
+                chatLog.value += data.player + " joined the room.\n";
+                onlineUsersSelectorAdd(data.player);
                 break;
-            case "private_message":
-                chatLog.value += "PM from " + data.user + ": " + data.message + "\n";
+
+            case "player_leave":
+                chatLog.value += data.player + " left the room.\n";
+                onlineUsersSelectorRemove(data.player);
                 break;
-            case "private_message_delivered":
-                chatLog.value += "PM to " + data.target + ": " + data.message + "\n";
-                break;
+
             default:
                 console.error("Unknown message type!");
                 break;
@@ -100,10 +105,5 @@ function connect() {
         chatSocket.close();
     }
 }
-connect();
 
-onlineUsersSelector.onchange = function() {
-    chatMessageInput.value = "/pm " + onlineUsersSelector.value + " ";
-    onlineUsersSelector.value = null;
-    chatMessageInput.focus();
-};
+connect();
